@@ -1,14 +1,29 @@
 namespace API.Entities;
 
+/// <summary>
+/// This class is used to store the user information in the database.
+/// </summary>
 public class AppUser
 {
-public int Id { get; set; }
+    /// <summary>
+    /// This is the auto-incremented primary key of the user.
+    /// </summary>
+    public int Id { get; set; }
 
-public required string UserName { get; set; }
+    /// <summary>
+    /// this property is used to store the username of the user.
+    /// </summary>
+    public required string UserName { get; set; }
 
-public required byte[] PasswordHash { get; set; }
-public required byte[] PasswordSalt { get; set; }
+    /// <summary>
+    /// this property is used to store the password hash of the user.
+    /// </summary>
+    public required byte[] PasswordHash { get; set; }
 
+    /// <summary>
+    /// this property is used to store the password salt of the user.
+    /// </summary>
+    public required byte[] PasswordSalt { get; set; }
 
 }
 

@@ -1,28 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { NavComponent } from "./nav/nav.component";
+import { AccountService } from './_services/account.service';
+import { HomeComponent } from "./home/home.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css', 
+  styleUrl: './app.component.css',
   imports: [
     FormsModule,
-    // NgFor
+    NavComponent,
+    HomeComponent
 ]
 })
 export class AppComponent implements OnInit {
-  http = inject(HttpClient);
-  title = 'Hozepha DA';
-  Users: any;
-
+  accountService = inject(AccountService);
+  
   ngOnInit(): void {
-    this.http.get('https://localhost:5001/api/users')
-             .subscribe({
-              next: response => this.Users = response,
-              error: error => console.log(error),
-              complete: () => console.log("the request has completed")
-             });
+    this.setCurrentUser();
   }
+
+  setCurrentUser() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user = JSON.parse(userString);
+    this.accountService.currentUser.set(user);
+  }
+
 }
