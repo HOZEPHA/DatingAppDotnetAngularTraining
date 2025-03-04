@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { HomeComponent } from "./home/home.component";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,8 @@ import { HomeComponent } from "./home/home.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   imports: [
-    FormsModule,
-    NavComponent,
-    HomeComponent
+    RouterOutlet,
+    NavComponent
 ]
 })
 export class AppComponent implements OnInit {

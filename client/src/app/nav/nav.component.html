@@ -1,24 +1,27 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Dating App</a>
+        <a class="navbar-brand" routerLink="/">Dating App</a>
 
-        @if (accountService.currentUser()) {
+
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            @if (accountService.currentUser()) {
             <li class="nav-item">
-                <a class="nav-link">Matches</a>
+                <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Lists</a>
+                <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Messages</a>
+                <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
             </li>
+            }
         </ul>
-        }
 
         @if(accountService.currentUser()) {
         <div dropdown class="dropdown">
-            <a dropdownToggle class="dropdown-toggle text-ligh text-decoration-none">Welcome {{model.username}}</a>
+            <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
+                Welcome {{accountService.currentUser()?.username | titlecase}}
+            </a>
             <div *dropdownMenu class="dropdown-menu">
                 <a class="dropdown-item">Edit Profile</a>
                 <div class="dropdown-divider"></div>
@@ -30,12 +33,12 @@
 
         @if (!accountService.currentUser()) {
         <div>
-            <form #loginForm="ngForm" (ngSubmit)="login()" class="d-</form>flex" autocomplete="off">
-                <input class="form-control" name="username" [(ngModel)]="model.username" required="true"
-                    type="text" placeholder="Username">
+            <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex align-items-center gap-2" autocomplete="off">
+                <input class="form-control" name="username" [(ngModel)]="model.username" required="true" type="text"
+                    placeholder="Username">
                 <input class="form-control" name="password" [(ngModel)]="model.password" required="true"
                     placeholder="Password" type="password">
-                <button class="btn btn-outline-success me-2" type="submit">Login</button>
+                <button class="btn btn-success me-2" type="submit">Login</button>
             </form>
         </div>
         }
