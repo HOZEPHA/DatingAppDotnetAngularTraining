@@ -1,7 +1,8 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using API.Data;
-using API.Entities;
+using API.DTOs;
+using API.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,24 +16,26 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         if (await isUserExists(registerDto.Username))
             return BadRequest("The User already exists");
 
-        using var hmac = new HMACSHA3_512();
+        return Ok();
 
-        var user = new AppUser
-        {
-            UserName = registerDto.Username.ToLower(),
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            PasswordSalt = hmac.Key
-        };
+        // using var hmac = new HMACSHA3_512();
 
-        context.Users.Add(user);
+        // var user = new AppUser
+        // {
+        //     UserName = registerDto.Username.ToLower(),
+        //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+        //     PasswordSalt = hmac.Key
+        // };
 
-        await context.SaveChangesAsync();
+        // context.Users.Add(user);
 
-        return new UserDto
-        {
-            Username = user.UserName,
-            Token = tokenService.CreateToken(user)
-        };
+        // await context.SaveChangesAsync();
+
+        // return new UserDto
+        // {
+        //     Username = user.UserName,
+        //     Token = tokenService.CreateToken(user)
+        // };
     }
 
     [HttpPost("login")] //account/login
@@ -43,7 +46,7 @@ public class AccountController(DataContext context, ITokenService tokenService) 
 
         if (user == null) return Unauthorized("Invalid username");
 
-        using var hmac = new HMACSHA3_512(user.PasswordSalt);
+        using var hmac = new HMACSHA512(user.PasswordSalt);
 
         var ComputeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 

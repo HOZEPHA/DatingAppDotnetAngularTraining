@@ -1,3 +1,5 @@
+using API.Extensions;
+
 namespace API.Entities;
 
 /// <summary>
@@ -18,12 +20,37 @@ public class AppUser
     /// <summary>
     /// this property is used to store the password hash of the user.
     /// </summary>
-    public required byte[] PasswordHash { get; set; }
+    public byte[] PasswordHash { get; set; } = [];
 
     /// <summary>
     /// this property is used to store the password salt of the user.
     /// </summary>
-    public required byte[] PasswordSalt { get; set; }
+    public byte[] PasswordSalt { get; set; } = [];
+
+    public DateOnly DateOfBirth { get; set; }
+
+    public required string KnownAs { get; set; }
+
+    public DateTime Created { get; set; } = DateTime.UtcNow;
+
+    public DateTime LastActive { get; set; } = DateTime.UtcNow;
+
+    public required string Gender { get; set; }
+
+    public string? Introduction { get; set; }
+
+    public string? Interests { get; set; }
+
+    public string? LookingFor { get; set; }
+
+    public required string City { get; set; }
+
+    public required string Country { get; set; }
+
+    public List<Photo> Photos { get; set; } = [];
+
+    // public int GetAge(){
+    //     return DateOfBirth.CalculateAge();
+    // }
 
 }
-
